@@ -1,0 +1,28 @@
+{
+  "name": "foodies",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "start": "node ./db.js",
+    "dev": "nodemon ./db.js",
+    "test": "cross-env NODE_OPTIONS=--experimental-vm-modules npx jest",
+    "build": "npm install && npm run build"
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5",
+    "cross-env": "^7.0.3",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "jimp": "^0.22.12",
+    "joi": "^17.13.1",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.4.1",
+    "morgan": "^1.10.0",
+    "multer": "^1.4.5-lts.1",
+    "nanoid": "^5.0.7"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.3"
+  }
+}
