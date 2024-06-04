@@ -3,7 +3,7 @@ import morgan from 'morgan';
 import cors from 'cors';
 import 'dotenv/config';
 
-// import authRouter from "./routes/authRouter.js";
+import authRouter from './routes/authRouter.js';
 // import categoriesRouter from "./routes/categoriesRouter.js";
 // import areasRouter from "./routes/areasRouter.js";
 // import ingredientsRouter from "./routes/ingredientsRouter.js";
@@ -16,8 +16,10 @@ app.use(morgan('tiny'));
 
 app.use(cors());
 app.use(express.json());
+app.use(express.static('public'));
 
-// app.use("/api/users", authRouter);
+app.use('/api/users', authRouter);
+
 // app.use("/api/categories", categoriesRouter);
 // app.use("/api/areas", areasRouter);
 // app.use("/api/ingredients", ingredientsRouter);
