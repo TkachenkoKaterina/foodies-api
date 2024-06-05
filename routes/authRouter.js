@@ -1,5 +1,6 @@
 import express from 'express';
 import ctrlUser from '../controllers/authControllers.js';
+import userController from '../controllers/user/index.js';
 import isEmptyBody from '../middlewares/isEmptyBody.js';
 import validateBody from '../decorators/validateBody.js';
 import authenticate from '../middlewares/authenticate.js';
@@ -35,5 +36,13 @@ authRouter.patch(
 );
 
 authRouter.get('/profile/:id', authenticate, ctrlUser.getProfileInfo);
+
+authRouter.post('/follow/:id', authenticate, userController.followUser);
+
+authRouter.delete('/follow/:id', authenticate, userController.unfollowUser);
+
+authRouter.get('/followers', authenticate, userController.getFollowers);
+
+authRouter.get('/following', authenticate, userController.getFollowing);
 
 export default authRouter;
