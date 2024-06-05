@@ -1,7 +1,9 @@
-import { getAllOwnRecipes } from "../controllers/recipesController";
+import express from 'express';
+import { getAllOwnRecipes } from '../controllers/recipesController.js';
+import authenticate from '../middlewares/authenticate.js';
 
 const recipesRouter = express.Router();
 
-contactsRouter.get("/", getAllOwnRecipes);
+recipesRouter.get('/', authenticate, getAllOwnRecipes);
 
 export default recipesRouter;
