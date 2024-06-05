@@ -101,10 +101,23 @@ const updateAvatar = async (req, res, next) => {
   }
 };
 
+const getProfileInfo = async (req, res) => {
+  const { id } = req.params;
+  const user = await authServices.findUserById(id);
+  res.json({
+    name: user.name,
+    email: user.email,
+    avatar: user.avatar,
+    followers: user.followers,
+    following: user.following,
+  });
+};
+
 export default {
   signup: ctrlWraper(signup),
   signin: ctrlWraper(signin),
   logout: ctrlWraper(logout),
   getCurrent: ctrlWraper(getCurrent),
   updateAvatar: ctrlWraper(updateAvatar),
+  getProfileInfo: ctrlWraper(getProfileInfo),
 };
