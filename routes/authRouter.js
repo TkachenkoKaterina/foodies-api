@@ -34,4 +34,6 @@ authRouter.patch(
   ctrlUser.updateAvatar
 );
 
+authRouter.get('/profile/:id', authenticate, ctrlUser.getProfileInfo);
+
 export default authRouter;
