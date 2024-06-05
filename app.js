@@ -6,7 +6,7 @@ import 'dotenv/config';
 import authRouter from './routes/authRouter.js';
 import recipesRouter from './routes/recipesRouter.js';
 import categoriesRouter from "./routes/categoriesRouter.js";
-// import areasRouter from "./routes/areasRouter.js";
+import areasRouter from "./routes/areasRouter.js";
 // import ingredientsRouter from "./routes/ingredientsRouter.js";
 // import testimonialsRouter from "./routes/testimonialsRouter.js";
 
@@ -21,7 +21,7 @@ app.use(express.static('public'));
 app.use('/api/users', authRouter);
 
 app.use("/api/categories", categoriesRouter);
-// app.use("/api/areas", areasRouter);
+app.use("/api/areas", areasRouter);
 // app.use("/api/ingredients", ingredientsRouter);
 // app.use("/api/testimonials", testimonialsRouter);
 app.use('/api/recipes', recipesRouter);
