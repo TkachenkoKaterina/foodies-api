@@ -7,8 +7,6 @@ const getFollowers = async (req, res) => {
   const followers = await userServices.getFollowers(id);
 
   res.status(HttpCode.OK).json({
-    status: 'success',
-    code: HttpCode.OK,
     followers,
   });
 };

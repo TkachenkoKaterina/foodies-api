@@ -5,11 +5,9 @@ const unfollowUser = async (req, res) => {
   const { id } = req.params;
   const { _id: ownerId } = req.user;
 
-  await userServices.unfollowUser(id, ownerId);
+  const user = await userServices.unfollowUser(id, ownerId);
 
   res.status(HttpCode.OK).json({
-    status: 'success',
-    code: HttpCode.OK,
     message: `You are no longer following ${user.name}`,
   });
 };

@@ -8,8 +8,6 @@ const followUser = async (req, res) => {
   const user = await userServices.followUser(id, ownerId);
 
   res.status(HttpCode.OK).json({
-    status: 'success',
-    code: HttpCode.OK,
     message: `You are now following ${user.name}`,
   });
 };
