@@ -1,6 +1,7 @@
 import User from '../../models/User.js';
 import HttpError from '../../helpers/HttpError.js';
 import { HttpCode } from '../../constants/constants.js';
+import getUsersWithRecipes from '../../helpers/getUsersWithRecipes.js';
 
 const getFollowers = async id => {
   const user = await User.findById(id).populate(
@@ -13,7 +14,12 @@ const getFollowers = async id => {
   }
 
   const followers = user.followers;
-  return followers;
+
+  const followersWithRecipes = await Promise.all(
+    followers.map(getUsersWithRecipes)
+  );
+
+  return followersWithRecipes;
 };
 
 export default getFollowers;
