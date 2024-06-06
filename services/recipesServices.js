@@ -6,10 +6,15 @@ export const addRecipeService = async data => {
   return Recipe.create(data);
 };
 
+export const countRecipes = filter => Recipe.countDocuments(filter);
+
 export const listAllRecipesService = (search = {}) => {
   try {
     const { filter = {}, fields = '', settings = {} } = search;
-    return Recipe.find(filter, fields, settings).populate('owner');
+    return Recipe.find(filter, fields, settings).populate(
+      'owner',
+      'username email'
+    );
   } catch (error) {
     console.error('Error fetching recipes: ', error);
     throw error;
@@ -44,11 +49,10 @@ export const removeFromFavoritesService = async (userId, recipeId) => {
   await user.save();
 };
 
-export const getFavoriteRecipesService = async (userId) => {
+export const getFavoriteRecipesService = async userId => {
   const user = await User.findById(userId).populate('favorites');
   if (!user) {
     throw HttpError(404, 'User not found');
   }
   return user.favorites;
 };
-
