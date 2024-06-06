@@ -35,11 +35,19 @@ const recipesSchema = new Schema(
       type: Number,
       required: [true, 'Set cooking time for recipe'],
     },
-    ingredients: {
-      type: Schema.Types.ObjectId,
-      ref: 'ingredients',
-    },
-
+    ingredients: [
+      {
+        id: {
+          type: Schema.Types.ObjectId,
+          ref: 'Ingredient',
+          required: [true, 'Set ingredient ID'],
+        },
+        measure: {
+          type: String,
+          required: [true, 'Set ingredient measure'],
+        },
+      },
+    ],
     favorite: {
       type: Boolean,
       default: false,

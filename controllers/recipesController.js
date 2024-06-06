@@ -1,5 +1,11 @@
-import { listAllRecipesService } from '../services/recipesServices.js';
-import Recipe from '../models/Recipe.js';
+import HttpError from '../helpers/HttpError.js';
+import {
+  addRecipeService,
+  listAllRecipesService,
+  removeRecipeService, 
+  findRecipeByIdAndOwnerService, 
+  updateRecipeFavoriteStatusService
+} from '../services/recipesServices.js';
 
 export const getAllOwnRecipes = async (req, res, next) => {
   try {
@@ -16,19 +22,44 @@ export const getAllOwnRecipes = async (req, res, next) => {
   }
 };
 
+export const deleteRecipe = async (req, res, next) => {
+  try {
+    const { id: _id } = req.params;
+    const { _id: owner } = req.user;
+    const result = await removeRecipeService({ _id, owner });
+    if (!result) {
+      throw HttpError(404, `Not found`);
+    }
+    res.json(result);
+  } catch (error) {
+    next(error);
+  }
+};
+
+    
+export const createRecipe = async (req, res, next) => {
+  try {
+    const { _id: owner } = req.user;
+    const result = await addRecipeService({ ...req.body, owner });
+    res.status(201).json(result);
+  } catch (error) {
+    next(error);
+  }
+};
+
+
 export const addToFavorites = async (req, res, next) => {
   try {
     const { recipeId } = req.body; 
-    const { _id: userId } = req.user;
+    const { _id: owner } = req.user;
 
-    const recipe = await Recipe.findOne({ _id: recipeId, owner: userId });
+    const recipe = await findRecipeByIdAndOwnerService(recipeId, owner);
 
     if (!recipe) {
-      return res.status(404).json({ message: "Recipe not found or doesn't belong to the user" });
+      throw new HttpError(404, "Recipe not found or doesn't belong to the user");
     }
 
-    recipe.favorite = true;
-    await recipe.save();
+    await updateRecipeFavoriteStatusService(recipe, true);
 
     res.status(200).json({ message: 'Recipe added to favorites successfully' });
   } catch (error) {
@@ -36,20 +67,18 @@ export const addToFavorites = async (req, res, next) => {
   }
 };
 
-
 export const removeFromFavorites = async (req, res, next) => {
   try {
     const { recipeId } = req.body; 
-    const { _id: userId } = req.user;
+    const { _id: owner } = req.user;
 
-    const recipe = await Recipe.findOne({ _id: recipeId, owner: userId });
+    const recipe = await findRecipeByIdAndOwnerService(recipeId, owner);
 
     if (!recipe) {
-      return res.status(404).json({ message: "Recipe not found or doesn't belong to the user" });
+      throw new HttpError(404, "Recipe not found or doesn't belong to the user");
     }
 
-    recipe.favorite = false;
-    await recipe.save();
+    await updateRecipeFavoriteStatusService(recipe, false);
 
     res.status(200).json({ message: 'Recipe removed from favorites successfully' });
   } catch (error) {
@@ -61,7 +90,7 @@ export const getFavoriteRecipes = async (req, res, next) => {
   try {
     const { _id: owner } = req.user;
     const filter = { owner, favorite: true }; 
-    const fields = "-createdAt -updatedAt";
+    const fields = '-createdAt -updatedAt';
     const result = await listAllRecipesService({ filter, fields });
     res.json({ result });
   } catch (error) {
