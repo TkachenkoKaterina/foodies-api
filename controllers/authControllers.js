@@ -7,6 +7,8 @@ import path from 'path';
 import fs from 'fs/promises';
 import Jimp from 'jimp';
 
+import { listAllRecipesService } from '../services/recipesServices.js'
+
 const signup = async (req, res) => {
   const { name, email, password } = req.body;
   const user = await authServices.findUser({ email });
@@ -102,15 +104,36 @@ const updateAvatar = async (req, res, next) => {
 };
 
 const getProfileInfo = async (req, res) => {
+  const { _id: owner } = req.user;
   const { id } = req.params;
+  const currentUser = await authServices.findUserById(owner);
   const user = await authServices.findUserById(id);
-  res.json({
-    name: user.name,
-    email: user.email,
-    avatar: user.avatar,
-    followers: user.followers,
-    following: user.following,
-  });
+  console.log({id});
+  if (owner.toString() === id) {
+    const filter = { owner };
+    console.log(filter);
+    const currentUserRecipes = await listAllRecipesService({ filter });
+    res.json({
+      name: currentUser.name,
+      email: currentUser.email,
+      avatar: currentUser.avatar,
+      recipes: currentUserRecipes.length,
+      favorites: currentUser.favorites.length,
+      followers: currentUser.followers.length,
+      following: currentUser.following.length,
+    });
+  } else {
+    const filter = { id };
+    const userRecipes = await listAllRecipesService({ filter });
+    res.json({
+      name: user.name,
+      email: user.email,
+      recipes: userRecipes.length,
+      avatar: user.avatar,
+      followers: user.followers.length,
+    });
+  }
+  
 };
 
 export default {
