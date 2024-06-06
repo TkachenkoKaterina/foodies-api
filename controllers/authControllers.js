@@ -1,11 +1,13 @@
 import * as authServices from '../services/authServices.js';
 import HttpError from '../helpers/HttpError.js';
 import emailToFilename from '../helpers/emailToFileName.js';
-import ctrlWraper from '../decorators/ctrlWrapper.js';
+import ctrlWrapper from '../decorators/ctrlWrapper.js';
 import gravatar from 'gravatar';
 import path from 'path';
 import fs from 'fs/promises';
-import Jimp from 'jimp';
+import resizeImage from '../helpers/resizeImg.js';
+
+import { listAllRecipesService } from '../services/recipesServices.js'
 
 const signup = async (req, res) => {
   const { name, email, password } = req.body;
@@ -80,14 +82,7 @@ const updateAvatar = async (req, res, next) => {
     const newFileName = emailToFilename(user.email) + extension;
     const newPath = path.join(avatarsPath, newFileName);
 
-    Jimp.read(oldPath)
-      .then(image => {
-        image.resize(250, 250);
-        image.write(newPath);
-      })
-      .catch(err => {
-        throw HttpError(500);
-      });
+    resizeImage(oldPath, newPath, 250, 250);
 
     await fs.unlink(oldPath);
 
@@ -102,22 +97,43 @@ const updateAvatar = async (req, res, next) => {
 };
 
 const getProfileInfo = async (req, res) => {
+  const { _id: owner } = req.user;
   const { id } = req.params;
+  const currentUser = await authServices.findUserById(owner);
   const user = await authServices.findUserById(id);
-  res.json({
-    name: user.name,
-    email: user.email,
-    avatar: user.avatar,
-    followers: user.followers,
-    following: user.following,
-  });
+  console.log({id});
+  if (owner.toString() === id) {
+    const filter = { owner };
+    console.log(filter);
+    const currentUserRecipes = await listAllRecipesService({ filter });
+    res.json({
+      name: currentUser.name,
+      email: currentUser.email,
+      avatar: currentUser.avatar,
+      recipes: currentUserRecipes.length,
+      favorites: currentUser.favorites.length,
+      followers: currentUser.followers.length,
+      following: currentUser.following.length,
+    });
+  } else {
+    const filter = { id };
+    const userRecipes = await listAllRecipesService({ filter });
+    res.json({
+      name: user.name,
+      email: user.email,
+      recipes: userRecipes.length,
+      avatar: user.avatar,
+      followers: user.followers.length,
+    });
+  }
+  
 };
 
 export default {
-  signup: ctrlWraper(signup),
-  signin: ctrlWraper(signin),
-  logout: ctrlWraper(logout),
-  getCurrent: ctrlWraper(getCurrent),
-  updateAvatar: ctrlWraper(updateAvatar),
-  getProfileInfo: ctrlWraper(getProfileInfo),
+  signup: ctrlWrapper(signup),
+  signin: ctrlWrapper(signin),
+  logout: ctrlWrapper(logout),
+  getCurrent: ctrlWrapper(getCurrent),
+  updateAvatar: ctrlWrapper(updateAvatar),
+  getProfileInfo: ctrlWrapper(getProfileInfo),
 };
