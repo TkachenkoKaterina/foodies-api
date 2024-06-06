@@ -1,7 +1,7 @@
 import * as authServices from '../services/authServices.js';
 import HttpError from '../helpers/HttpError.js';
 import emailToFilename from '../helpers/emailToFileName.js';
-import ctrlWraper from '../decorators/ctrlWrapper.js';
+import ctrlWrapper from '../decorators/ctrlWrapper.js';
 import gravatar from 'gravatar';
 import path from 'path';
 import fs from 'fs/promises';
@@ -137,10 +137,10 @@ const getProfileInfo = async (req, res) => {
 };
 
 export default {
-  signup: ctrlWraper(signup),
-  signin: ctrlWraper(signin),
-  logout: ctrlWraper(logout),
-  getCurrent: ctrlWraper(getCurrent),
-  updateAvatar: ctrlWraper(updateAvatar),
-  getProfileInfo: ctrlWraper(getProfileInfo),
+  signup: ctrlWrapper(signup),
+  signin: ctrlWrapper(signin),
+  logout: ctrlWrapper(logout),
+  getCurrent: ctrlWrapper(getCurrent),
+  updateAvatar: ctrlWrapper(updateAvatar),
+  getProfileInfo: ctrlWrapper(getProfileInfo),
 };
