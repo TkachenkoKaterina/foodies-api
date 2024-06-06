@@ -1,4 +1,5 @@
 import User from '../../models/User.js';
+import Recipe from '../../models/Recipe.js';
 import HttpError from '../../helpers/HttpError.js';
 import { HttpCode } from '../../constants/constants.js';
 
@@ -13,7 +14,20 @@ const getFollowing = async id => {
   }
 
   const following = user.following;
-  return following;
+
+  const followingWithRecipes = await Promise.all(
+    following.map(async follower => {
+      const recipes = await Recipe.find({ owner: follower._id }).select(
+        'title thumb _id'
+      );
+      return {
+        ...follower.toObject(),
+        recipes,
+      };
+    })
+  );
+
+  return followingWithRecipes;
 };
 
 export default getFollowing;

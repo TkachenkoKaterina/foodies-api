@@ -41,7 +41,7 @@ authRouter.post('/follow/:id', authenticate, userController.followUser);
 
 authRouter.delete('/follow/:id', authenticate, userController.unfollowUser);
 
-authRouter.get('/followers', authenticate, userController.getFollowers);
+authRouter.get('/followers/:id', authenticate, userController.getFollowers);
 
 authRouter.get('/following', authenticate, userController.getFollowing);
 
