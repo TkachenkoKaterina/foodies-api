@@ -5,6 +5,7 @@ import isEmptyBody from '../middlewares/isEmptyBody.js';
 import validateBody from '../decorators/validateBody.js';
 import authenticate from '../middlewares/authenticate.js';
 import upload from '../middlewares/upload.js';
+import { isValidId } from '../middlewares/isValidId.js';
 
 const authRouter = express.Router();
 
@@ -37,11 +38,26 @@ authRouter.patch(
 
 authRouter.get('/profile/:id', authenticate, ctrlUser.getProfileInfo);
 
-authRouter.post('/follow/:id', authenticate, userController.followUser);
+authRouter.post(
+  '/follow/:id',
+  authenticate,
+  isValidId,
+  userController.followUser
+);
 
-authRouter.delete('/follow/:id', authenticate, userController.unfollowUser);
+authRouter.delete(
+  '/follow/:id',
+  authenticate,
+  isValidId,
+  userController.unfollowUser
+);
 
-authRouter.get('/followers/:id', authenticate, userController.getFollowers);
+authRouter.get(
+  '/followers/:id',
+  authenticate,
+  isValidId,
+  userController.getFollowers
+);
 
 authRouter.get('/following', authenticate, userController.getFollowing);
 

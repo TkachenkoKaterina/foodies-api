@@ -1,7 +1,7 @@
 import User from '../../models/User.js';
-import Recipe from '../../models/Recipe.js';
 import HttpError from '../../helpers/HttpError.js';
 import { HttpCode } from '../../constants/constants.js';
+import getUsersWithRecipes from '../../helpers/getUsersWithRecipes.js';
 
 const getFollowers = async id => {
   const user = await User.findById(id).populate(
@@ -16,15 +16,7 @@ const getFollowers = async id => {
   const followers = user.followers;
 
   const followersWithRecipes = await Promise.all(
-    followers.map(async follower => {
-      const recipes = await Recipe.find({ owner: follower._id }).select(
-        'title thumb _id'
-      );
-      return {
-        ...follower.toObject(),
-        recipes,
-      };
-    })
+    followers.map(getUsersWithRecipes)
   );
 
   return followersWithRecipes;
