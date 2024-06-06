@@ -1,10 +1,17 @@
 import HttpError from '../helpers/HttpError.js';
+import path from 'path';
+import fs from 'fs/promises';
 import {
   addRecipeService,
   listAllRecipesService,
-  removeRecipeService, 
-  addToFavoritesService, removeFromFavoritesService, getFavoriteRecipesService
+  removeRecipeService,
+  addToFavoritesService,
+  removeFromFavoritesService,
+  getFavoriteRecipesService,
+  countRecipes,
 } from '../services/recipesServices.js';
+
+const thumbRecipeImagesPath = path.resolve('public', 'thumbRecipeImages');
 
 export const getAllOwnRecipes = async (req, res, next) => {
   try {
@@ -15,7 +22,8 @@ export const getAllOwnRecipes = async (req, res, next) => {
     const skip = (page - 1) * limit;
     const settings = { skip, limit };
     const result = await listAllRecipesService({ filter, fields, settings });
-    res.json({ result });
+    const total = await countRecipes(filter);
+    res.json({ total, result });
   } catch (error) {
     next(error);
   }
@@ -35,11 +43,14 @@ export const deleteRecipe = async (req, res, next) => {
   }
 };
 
-    
 export const createRecipe = async (req, res, next) => {
   try {
+    const { path: oldPath, filename } = req.file;
+    const newPath = path.join(thumbRecipeImagesPath, filename);
+    await fs.rename(oldPath, newPath);
     const { _id: owner } = req.user;
-    const result = await addRecipeService({ ...req.body, owner });
+    const thumb = path.join('thumbRecipeImages', filename);
+    const result = await addRecipeService({ ...req.body, owner, thumb });
     res.status(201).json(result);
   } catch (error) {
     next(error);
@@ -66,7 +77,9 @@ export const removeFromFavorites = async (req, res, next) => {
 
     await removeFromFavoritesService(userId, recipeId);
 
-    res.status(200).json({ message: 'Recipe removed from favorites successfully' });
+    res
+      .status(200)
+      .json({ message: 'Recipe removed from favorites successfully' });
   } catch (error) {
     next(error);
   }

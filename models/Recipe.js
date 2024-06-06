@@ -9,15 +9,18 @@ const recipesSchema = new Schema(
     },
     category: {
       type: Schema.Types.ObjectId,
-      ref: 'categories',
+      ref: 'Category',
+      required: [true, 'Set category for recipe'],
     },
     owner: {
       type: Schema.Types.ObjectId,
-      ref: 'user',
+      ref: 'User',
+      required: [true, 'Set owner for recipe'],
     },
     area: {
       type: Schema.Types.ObjectId,
-      ref: 'areas',
+      ref: 'Area',
+      required: [true, 'Set area for recipe'],
     },
     instructions: {
       type: String,
@@ -37,7 +40,7 @@ const recipesSchema = new Schema(
     },
     ingredients: [
       {
-        id: {
+        _id: {
           type: Schema.Types.ObjectId,
           ref: 'Ingredient',
           required: [true, 'Set ingredient ID'],
@@ -48,10 +51,6 @@ const recipesSchema = new Schema(
         },
       },
     ],
-    // favorite: {
-    //   type: Boolean,
-    //   default: false,
-    // },
   },
   { versionKey: false, timestamps: true }
 );

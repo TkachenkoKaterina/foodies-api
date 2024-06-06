@@ -5,7 +5,7 @@ import ctrlWrapper from '../decorators/ctrlWrapper.js';
 import gravatar from 'gravatar';
 import path from 'path';
 import fs from 'fs/promises';
-import Jimp from 'jimp';
+import resizeImage from '../helpers/resizeImg.js';
 
 import { listAllRecipesService } from '../services/recipesServices.js'
 
@@ -82,14 +82,7 @@ const updateAvatar = async (req, res, next) => {
     const newFileName = emailToFilename(user.email) + extension;
     const newPath = path.join(avatarsPath, newFileName);
 
-    Jimp.read(oldPath)
-      .then(image => {
-        image.resize(250, 250);
-        image.write(newPath);
-      })
-      .catch(err => {
-        throw HttpError(500);
-      });
+    resizeImage(oldPath, newPath, 250, 250);
 
     await fs.unlink(oldPath);
 
