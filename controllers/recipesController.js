@@ -3,8 +3,7 @@ import {
   addRecipeService,
   listAllRecipesService,
   removeRecipeService, 
-  findRecipeByIdAndOwnerService, 
-  updateRecipeFavoriteStatusService
+  addToFavoritesService, removeFromFavoritesService, getFavoriteRecipesService
 } from '../services/recipesServices.js';
 
 export const getAllOwnRecipes = async (req, res, next) => {
@@ -47,19 +46,12 @@ export const createRecipe = async (req, res, next) => {
   }
 };
 
-
 export const addToFavorites = async (req, res, next) => {
   try {
-    const { recipeId } = req.body; 
-    const { _id: owner } = req.user;
+    const { recipeId } = req.body;
+    const { _id: userId } = req.user;
 
-    const recipe = await findRecipeByIdAndOwnerService(recipeId, owner);
-
-    if (!recipe) {
-      throw new HttpError(404, "Recipe not found or doesn't belong to the user");
-    }
-
-    await updateRecipeFavoriteStatusService(recipe, true);
+    await addToFavoritesService(userId, recipeId);
 
     res.status(200).json({ message: 'Recipe added to favorites successfully' });
   } catch (error) {
@@ -69,16 +61,10 @@ export const addToFavorites = async (req, res, next) => {
 
 export const removeFromFavorites = async (req, res, next) => {
   try {
-    const { recipeId } = req.body; 
-    const { _id: owner } = req.user;
+    const { recipeId } = req.body;
+    const { _id: userId } = req.user;
 
-    const recipe = await findRecipeByIdAndOwnerService(recipeId, owner);
-
-    if (!recipe) {
-      throw new HttpError(404, "Recipe not found or doesn't belong to the user");
-    }
-
-    await updateRecipeFavoriteStatusService(recipe, false);
+    await removeFromFavoritesService(userId, recipeId);
 
     res.status(200).json({ message: 'Recipe removed from favorites successfully' });
   } catch (error) {
@@ -88,11 +74,9 @@ export const removeFromFavorites = async (req, res, next) => {
 
 export const getFavoriteRecipes = async (req, res, next) => {
   try {
-    const { _id: owner } = req.user;
-    const filter = { owner, favorite: true }; 
-    const fields = '-createdAt -updatedAt';
-    const result = await listAllRecipesService({ filter, fields });
-    res.json({ result });
+    const { _id: userId } = req.user;
+    const favorites = await getFavoriteRecipesService(userId);
+    res.json({ favorites });
   } catch (error) {
     next(error);
   }
