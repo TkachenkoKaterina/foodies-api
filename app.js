@@ -10,6 +10,7 @@ import areasRouter from './routes/areasRouter.js';
 // import ingredientsRouter from "./routes/ingredientsRouter.js";
 import testimonialsRouter from './routes/testimonialsRouter.js';
 import publicRecipesRouter from './routes/publicRecipesRouter.js';
+// import publicRecipesRouter from './routes/publicRecipesRouter.js';
 
 const app = express();
 
@@ -24,9 +25,9 @@ app.use('/api/users', authRouter);
 app.use('/api/categories', categoriesRouter);
 app.use('/api/areas', areasRouter);
 // app.use("/api/ingredients", ingredientsRouter);
-app.use('/api/public', publicRecipesRouter);
 app.use('/api/testimonials', testimonialsRouter);
 app.use('/api/recipes', recipesRouter);
+app.use('/api/public', publicRecipesRouter);
 
 app.use((_, res) => {
   res.status(404).json({ message: 'Route not found' });

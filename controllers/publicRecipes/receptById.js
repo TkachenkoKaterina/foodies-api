@@ -1,5 +1,5 @@
 import HttpError from '../../helpers/HttpError.js';
-import publicServices from '../../services/publicRecipes/index.js';
+import publicServices from '../../services/publicRecipesServ/index.js';
 
 const receptById = async (req, res, next) => {
   const { id } = req.params;
