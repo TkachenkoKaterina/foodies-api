@@ -48,10 +48,10 @@ const recipesSchema = new Schema(
         },
       },
     ],
-    favorite: {
-      type: Boolean,
-      default: false,
-    },
+    // favorite: {
+    //   type: Boolean,
+    //   default: false,
+    // },
   },
   { versionKey: false, timestamps: true }
 );
