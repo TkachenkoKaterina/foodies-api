@@ -1,23 +1,20 @@
-import Ingredient from '../../models/Ingredient.js';
+import ingId from '../../helpers/ingNameToId.js';
 import Recipe from '../../models/Recipe.js';
 
-export const getRecipesByFilter = (
+export const getRecipesByFilter = async (
   category,
-  ingredientId = ' ',
+  ingredient = ' ',
   area = ' ',
   limit = 12,
   curPage = 1
 ) => {
-  //   const { filter = {}, perPage = 12, curPage = 1 } = search;
-  console.log(ingredientId);
-  if (ingredientId) {
-    // console.log(ingredient);
-    // const ingId = Ingredient.findOne(ingredient);
-    // console.log(ingId);
+  let ingredientId;
+  if (ingredient) {
+    ingredientId = await ingId(ingredient);
   }
-  if (!ingredientId && !area) {
+
+  if (ingredientId || area || category) {
     try {
-      console.log(area);
       return Recipe.aggregate([
         {
           $match: { category: category },
