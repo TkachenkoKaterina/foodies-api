@@ -1,5 +1,5 @@
 import { Schema, model } from 'mongoose';
-import { handleSaveError } from './hooks.js';
+import { handleSaveError } from '../routes/hooks.js';
 
 const recipesSchema = new Schema(
   {
