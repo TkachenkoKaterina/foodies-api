@@ -12,6 +12,7 @@ import {
 } from '../services/recipesServices.js';
 import ctrlWrapper from '../decorators/ctrlWrapper.js';
 import resizeImage from '../helpers/resizeImg.js';
+import mongoose from 'mongoose';
 
 const thumbRecipeImagesPath = path.resolve('public', 'thumbRecipeImages');
 
@@ -50,7 +51,7 @@ export const createOwnRecipe = async (req, res, next) => {
 
 export const addToFavorites = async (req, res, next) => {
   try {
-    const { recipeId } = req.body;
+    const { id: recipeId } = req.body;
     const { _id: userId } = req.user;
 
     await addToFavoritesService(userId, recipeId);
@@ -63,7 +64,7 @@ export const addToFavorites = async (req, res, next) => {
 
 export const removeFromFavorites = async (req, res, next) => {
   try {
-    const { recipeId } = req.body;
+    const { id: recipeId } = req.params;
     const { _id: userId } = req.user;
 
     await removeFromFavoritesService(userId, recipeId);
@@ -78,7 +79,7 @@ export const removeFromFavorites = async (req, res, next) => {
 
 export const getFavoriteRecipes = async (req, res, next) => {
   try {
-    const { _id: userId } = req.user;
+    const { id: userId } = req.user;
     const favorites = await getFavoriteRecipesService(userId);
     res.json({ favorites });
   } catch (error) {
