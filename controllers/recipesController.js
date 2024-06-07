@@ -12,7 +12,6 @@ import {
 } from '../services/recipesServices.js';
 import ctrlWrapper from '../decorators/ctrlWrapper.js';
 import resizeImage from '../helpers/resizeImg.js';
-import mongoose from 'mongoose';
 
 const thumbRecipeImagesPath = path.resolve('public', 'thumbRecipeImages');
 
@@ -50,20 +49,15 @@ export const createOwnRecipe = async (req, res, next) => {
 };
 
 export const addToFavorites = async (req, res, next) => {
-  try {
     const { id: recipeId } = req.body;
     const { _id: userId } = req.user;
 
     await addToFavoritesService(userId, recipeId);
 
     res.status(200).json({ message: 'Recipe added to favorites successfully' });
-  } catch (error) {
-    next(error);
-  }
 };
 
 export const removeFromFavorites = async (req, res, next) => {
-  try {
     const { id: recipeId } = req.params;
     const { _id: userId } = req.user;
 
@@ -72,23 +66,19 @@ export const removeFromFavorites = async (req, res, next) => {
     res
       .status(200)
       .json({ message: 'Recipe removed from favorites successfully' });
-  } catch (error) {
-    next(error);
-  }
 };
 
 export const getFavoriteRecipes = async (req, res, next) => {
-  try {
     const { id: userId } = req.user;
     const favorites = await getFavoriteRecipesService(userId);
     res.json({ favorites });
-  } catch (error) {
-    next(error);
-  }
 };
 
 export default {
   getAllOwnRecipes: ctrlWrapper(getAllOwnRecipes),
   deleteOwnRecipe: ctrlWrapper(deleteOwnRecipe),
   createOwnRecipe: ctrlWrapper(createOwnRecipe),
+  addToFavorites: ctrlWrapper(addToFavorites),
+  removeFromFavorites: ctrlWrapper(removeFromFavorites),
+  getFavoriteRecipes: ctrlWrapper(getFavoriteRecipes),
 };

@@ -1,9 +1,4 @@
 import express from 'express';
-import {
-  addToFavorites,
-  removeFromFavorites,
-  getFavoriteRecipes,
-} from '../controllers/recipesController.js';
 
 import recipesControllers from '../controllers/recipesController.js';
 import authenticate from '../middlewares/authenticate.js';
@@ -34,8 +29,8 @@ recipesRouter.delete(
   isValidId,
   recipesControllers.deleteOwnRecipe
 );
-recipesRouter.post('/favorites', authenticate, addToFavorites);
-recipesRouter.delete('/favorites/:id', authenticate, isValidId, removeFromFavorites);
-recipesRouter.get('/favorites', authenticate, getFavoriteRecipes);
+recipesRouter.post('/favorites', authenticate, recipesControllers.addToFavorites);
+recipesRouter.delete('/favorites/:id', authenticate, isValidId, recipesControllers.removeFromFavorites);
+recipesRouter.get('/favorites', authenticate, recipesControllers.getFavoriteRecipes);
 
 export default recipesRouter;
