@@ -31,7 +31,7 @@ recipesRouter.post(
 recipesRouter.get('/', authenticate, getAllOwnRecipes);
 recipesRouter.delete('/:id', authenticate, isValidId, deleteRecipe);
 recipesRouter.post('/favorites', authenticate, addToFavorites);
-recipesRouter.delete('/favorites', authenticate, removeFromFavorites);
+recipesRouter.delete('/favorites/:id', authenticate, isValidId, removeFromFavorites);
 recipesRouter.get('/favorites', authenticate, getFavoriteRecipes);
 
 export default recipesRouter;
