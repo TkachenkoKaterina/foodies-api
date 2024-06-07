@@ -25,8 +25,8 @@ export const getRecipesByFilter = async (
           //   { category },
           // ],
         }, ////
-        { $skip: 12 },
-        { $limit: 12 },
+        { $skip: limit * curPage },
+        { $limit: limit },
         {
           $project: {
             _id: 1,
