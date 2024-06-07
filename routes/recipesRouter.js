@@ -1,12 +1,11 @@
 import express from 'express';
 import {
-  getAllOwnRecipes,
-  createRecipe,
-  deleteRecipe,
   addToFavorites,
   removeFromFavorites,
   getFavoriteRecipes,
 } from '../controllers/recipesController.js';
+
+import recipesControllers from '../controllers/recipesController.js';
 import authenticate from '../middlewares/authenticate.js';
 import upload from '../middlewares/upload.js';
 import checkFileExists from '../middlewares/checkFileExists.js';
@@ -26,10 +25,15 @@ recipesRouter.post(
   validateBody(createRecipeSchema),
   isEmptyBody,
   checkFileExists,
-  createRecipe
+  recipesControllers.createOwnRecipe
 );
-recipesRouter.get('/', authenticate, getAllOwnRecipes);
-recipesRouter.delete('/:id', authenticate, isValidId, deleteRecipe);
+recipesRouter.get('/', authenticate, recipesControllers.getAllOwnRecipes);
+recipesRouter.delete(
+  '/:id',
+  authenticate,
+  isValidId,
+  recipesControllers.deleteOwnRecipe
+);
 recipesRouter.post('/favorites', authenticate, addToFavorites);
 recipesRouter.delete('/favorites', authenticate, removeFromFavorites);
 recipesRouter.get('/favorites', authenticate, getFavoriteRecipes);
