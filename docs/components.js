@@ -128,7 +128,7 @@ export default {
     },
     securitySchemes: {
       bearerAuth: {
-        type: `${APP_ENV === 'prodaction' ? 'https' : 'http'}`,
+        type: 'http',
         name: 'authorization',
         scheme: 'bearer',
         bearerFormat: 'JWT',
