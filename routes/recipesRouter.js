@@ -9,6 +9,7 @@ import validateBody from '../decorators/validateBody.js';
 import { createRecipeSchema } from '../schemas/recipesSchema.js';
 import formDataToJSON from '../middlewares/formDataToJSON.js';
 import { isValidId } from '../middlewares/isValidId.js';
+import publicRecipesctrl from '../controllers/publicRecipes/index.js';
 
 const recipesRouter = express.Router();
 
@@ -29,8 +30,24 @@ recipesRouter.delete(
   isValidId,
   recipesControllers.deleteOwnRecipe
 );
-recipesRouter.post('/favorites', authenticate, recipesControllers.addToFavorites);
-recipesRouter.delete('/favorites/:id', authenticate, isValidId, recipesControllers.removeFromFavorites);
-recipesRouter.get('/favorites', authenticate, recipesControllers.getFavoriteRecipes);
+recipesRouter.post(
+  '/favorites',
+  authenticate,
+  recipesControllers.addToFavorites
+);
+recipesRouter.delete(
+  '/favorites/:id',
+  authenticate,
+  isValidId,
+  recipesControllers.removeFromFavorites
+);
+recipesRouter.get(
+  '/favorites',
+  authenticate,
+  recipesControllers.getFavoriteRecipes
+);
+
+recipesRouter.get('/:category', publicRecipesctrl.allRecipesInCategory);
+recipesRouter.get('/:id', isValidId, publicRecipesctrl.receptById);
 
 export default recipesRouter;
