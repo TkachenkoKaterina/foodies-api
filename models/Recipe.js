@@ -53,7 +53,7 @@ const recipesSchema = new Schema(
     ],
     likes: {
       type: Number,
-      required: [reu, 'Set cooking time for recipe'], //////<-------added likes
+      required: [true], //////<-------added likes
       default: 0,
     },
   },
