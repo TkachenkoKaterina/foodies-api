@@ -43,7 +43,7 @@ export const signin = async (email, pass) => {
     const payload = {
       id: user._id,
     };
-    const token = jwt.sign(payload, JWT_SECRET, { expiresIn: '24h' });
+    const token = jwt.sign(payload, JWT_SECRET, { expiresIn: '30d' });
     user.token = token;
     await user.save();
     return user;

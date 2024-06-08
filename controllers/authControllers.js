@@ -33,7 +33,6 @@ const signup = async (req, res) => {
 
   res.status(201).json({
     user: {
-      id: newUser._id,
       name: newUser.name,
       email: newUser.email,
       avatar: avatar,
@@ -50,7 +49,6 @@ const signin = async (req, res) => {
   res.json({
     token: user.token,
     user: {
-      id: newUser._id,
       name: user.name,
       email: user.email,
     },
@@ -67,12 +65,12 @@ const logout = async (req, res) => {
 };
 
 const getCurrent = async (req, res) => {
-  const user = await authServices.findUserById(req.user._id.toString());
+  // const user = await authServices.findUserById(req.user._id.toString());
+  user = req.user;
   if (user.token != req.user.token) {
     throw HttpError(401, 'Unauthorized');
   }
   res.json({
-    id: newUser._id,
     name: user.name,
     email: user.email,
     avatar: user.avatar,
