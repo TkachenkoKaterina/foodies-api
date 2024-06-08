@@ -1,7 +1,7 @@
 import Recipe from '../../models/Recipe.js';
 
-export const getRecipeById = async _id => {
-  const result = await Recipe.findById(_id);
+const getRecipeById = async id => {
+  const result = await Recipe.findOne({ _id: id });
   return result;
 };
 export default getRecipeById;

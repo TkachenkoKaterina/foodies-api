@@ -5,7 +5,7 @@ const ingId = async ingredient => {
     return;
   } else if (ingredient) {
     const result = await Ingredient.find({ name: ingredient }).select('_id');
-
+    console.log(result[0]?._id?.toHexString());
     return result[0]?._id?.toHexString();
   }
 };

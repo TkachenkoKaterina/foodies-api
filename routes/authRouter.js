@@ -5,7 +5,7 @@ import isEmptyBody from '../middlewares/isEmptyBody.js';
 import validateBody from '../decorators/validateBody.js';
 import authenticate from '../middlewares/authenticate.js';
 import upload from '../middlewares/upload.js';
-import { isValidId } from '../middlewares/isValidId.js';
+import isValidId from '../middlewares/isValidId.js';
 
 const authRouter = express.Router();
 

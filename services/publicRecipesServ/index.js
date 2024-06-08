@@ -1,7 +1,9 @@
 import getRecipeById from './getRecipeById.js';
-import getRecipesByFilter from './getRecipesByFilter.js';
+import getFilteredRecipes from './getFilteredRecipes.js';
+import getPopularRecipes from './getPopular.js';
 
 export default {
-  getRecipesByFilter,
   getRecipeById,
+  getFilteredRecipes,
+  getPopularRecipes,
 };
