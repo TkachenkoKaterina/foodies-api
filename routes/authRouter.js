@@ -31,8 +31,8 @@ authRouter.post('/logout', authenticate, ctrlUser.logout);
 
 authRouter.patch(
   '/avatars',
-  upload.single('avatar'),
   authenticate,
+  upload.single('avatar'),
   ctrlUser.updateAvatar
 );
 

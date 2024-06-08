@@ -7,7 +7,7 @@ import path from 'path';
 import fs from 'fs/promises';
 import resizeImage from '../helpers/resizeImg.js';
 
-import { listAllRecipesService } from '../services/recipesServices.js'
+import { listAllRecipesService } from '../services/recipesServices.js';
 
 const signup = async (req, res) => {
   const { name, email, password } = req.body;
@@ -20,9 +20,20 @@ const signup = async (req, res) => {
     r: 'x',
     d: 'retro',
   });
-  const newUser = await authServices.signup(name, email, password, avatar);
+
+  const newName = name.trim();
+  const newPassword = password.trim();
+
+  const newUser = await authServices.signup(
+    newName,
+    email,
+    newPassword,
+    avatar
+  );
+
   res.status(201).json({
     user: {
+      id: newUser._id,
       name: newUser.name,
       email: newUser.email,
       avatar: avatar,
@@ -39,6 +50,7 @@ const signin = async (req, res) => {
   res.json({
     token: user.token,
     user: {
+      id: newUser._id,
       name: user.name,
       email: user.email,
     },
@@ -60,6 +72,7 @@ const getCurrent = async (req, res) => {
     throw HttpError(401, 'Unauthorized');
   }
   res.json({
+    id: newUser._id,
     name: user.name,
     email: user.email,
     avatar: user.avatar,
@@ -101,7 +114,7 @@ const getProfileInfo = async (req, res) => {
   const { id } = req.params;
   const currentUser = await authServices.findUserById(owner);
   const user = await authServices.findUserById(id);
-  console.log({id});
+  console.log({ id });
   if (owner.toString() === id) {
     const filter = { owner };
     console.log(filter);
@@ -126,7 +139,6 @@ const getProfileInfo = async (req, res) => {
       followers: user.followers.length,
     });
   }
-  
 };
 
 export default {
