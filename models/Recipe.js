@@ -41,7 +41,7 @@ const recipesSchema = new Schema(
     ingredients: [
       {
         id: {
-          type: String, //////<-------changed type to string
+          type: String || Schema.Types.ObjectId, //////<-------changed type to string
           ref: 'Ingredient',
           required: [true, 'Set ingredient ID'],
         },

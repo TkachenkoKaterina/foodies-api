@@ -30,10 +30,10 @@ recipesRouter.post(
   recipesControllers.createOwnRecipe
 );
 recipesRouter.get(
-  '/myRecepies',
+  '/myRecipes',
   authenticate,
   recipesControllers.getAllOwnRecipes
-); //// <------- added myRecepies, інакше не праює 2 однакових раути на рецепти "/" один публічний інший приватний
+); //// <------- added myRecipes, інакше не праює 2 однакових раути на рецепти "/" один публічний інший приватний
 recipesRouter.delete(
   '/:id',
   authenticate,
