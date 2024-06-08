@@ -8,7 +8,7 @@ const recipesSchema = new Schema(
       required: [true, 'Set title for recipe'],
     },
     category: {
-      type: String, //////<-------changed type to string
+      type: Schema.Types.ObjectId, //////<-------changed type to string
       ref: 'Category',
       required: [true, 'Set category for recipe'],
     },
@@ -18,7 +18,7 @@ const recipesSchema = new Schema(
       required: [true, 'Set owner for recipe'],
     },
     area: {
-      type: String, //////<-------changed type to string
+      type: Schema.Types.ObjectId, //////<-------changed type to string
       ref: 'Area',
       required: [true, 'Set area for recipe'],
     },
@@ -41,7 +41,7 @@ const recipesSchema = new Schema(
     ingredients: [
       {
         id: {
-          type: String, //////<-------changed type to string
+          type: Schema.Types.ObjectId, //////<-------changed type to string
           ref: 'Ingredient',
           required: [true, 'Set ingredient ID'],
         },
