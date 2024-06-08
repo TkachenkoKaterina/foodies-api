@@ -51,6 +51,11 @@ const recipesSchema = new Schema(
         },
       },
     ],
+    likes: {
+      type: Number,
+      required: [false, 'Set cooking time for recipe'],
+      default: 0,
+    },
   },
   { versionKey: false, timestamps: true }
 );

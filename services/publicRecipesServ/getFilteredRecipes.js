@@ -1,7 +1,7 @@
 import ingId from '../../helpers/ingNameToId.js';
 import Recipe from '../../models/Recipe.js';
 
-export const getRecipesByFilter = async (search = {}) => {
+export const getFilteredRecipes = async (search = {}) => {
   const { filter = {}, fields = '', settings = {} } = search;
   const total = await Recipe.countDocuments(filter);
   const data = await Recipe.find(filter, fields, settings);
@@ -11,4 +11,4 @@ export const getRecipesByFilter = async (search = {}) => {
   };
 };
 
-export default getRecipesByFilter;
+export default getFilteredRecipes;
