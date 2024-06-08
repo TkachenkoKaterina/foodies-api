@@ -12,3 +12,5 @@ export const getFilteredRecipes = async (search = {}) => {
 };
 
 export default getFilteredRecipes;
+
+
