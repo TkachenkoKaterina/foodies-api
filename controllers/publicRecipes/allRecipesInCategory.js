@@ -8,7 +8,7 @@ const allRecipesInCategory = async (req, res, next) => {
   const filter = {};
 
   if (category) filter.category = category;
-  if (ingredient) filter.ingredients.id = ingredient; ////not working////{"ingredients.id" :"640c2dd963a319ea671e3665"} example from where _id ?
+  if (ingredient) filter.ingredients = { $elemMatch: { id: ingredient } };
   if (area) filter.area = area;
 
   const fields = 'title category area description owner thumb ingredients';
