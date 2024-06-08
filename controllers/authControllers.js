@@ -65,11 +65,8 @@ const logout = async (req, res) => {
 };
 
 const getCurrent = async (req, res) => {
-  // const user = await authServices.findUserById(req.user._id.toString());
-  user = req.user;
-  if (user.token != req.user.token) {
-    throw HttpError(401, 'Unauthorized');
-  }
+  const user = req.user;
+
   res.json({
     name: user.name,
     email: user.email,
