@@ -2,7 +2,7 @@ import Recipe from '../models/Recipe.js';
 
 const getUsersWithRecipes = async follower => {
   const recipes = await Recipe.find({ owner: follower._id }).select(
-    'title id thumb'
+    'title _id thumb'
   );
 
   return {
