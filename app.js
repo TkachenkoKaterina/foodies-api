@@ -7,7 +7,6 @@ import swaggerJsdoc from 'swagger-jsdoc';
 
 import authRouter from './routes/authRouter.js';
 import recipesRouter from './routes/recipesRouter.js';
-import publicRecipesRouter from './routes/publicRecipesRouter.js';
 import categoriesRouter from './routes/categoriesRouter.js';
 import areasRouter from './routes/areasRouter.js';
 import ingredientsRouter from './routes/ingredientsRouter.js';
@@ -31,7 +30,6 @@ app.use('/api/areas', areasRouter);
 app.use('/api/ingredients', ingredientsRouter);
 app.use('/api/testimonials', testimonialsRouter);
 app.use('/api/recipes', recipesRouter);
-app.use('/api/public', publicRecipesRouter);
 
 app.use((_, res) => {
   res.status(404).json({ message: 'Route not found' });

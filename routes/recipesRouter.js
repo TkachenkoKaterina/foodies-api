@@ -8,9 +8,16 @@ import isEmptyBody from '../middlewares/isEmptyBody.js';
 import validateBody from '../decorators/validateBody.js';
 import { createRecipeSchema } from '../schemas/recipesSchema.js';
 import formDataToJSON from '../middlewares/formDataToJSON.js';
-import { isValidId } from '../middlewares/isValidId.js';
+import isValidId from '../middlewares/isValidId.js';
+import publicRecipesctrl from '../controllers/publicRecipes/index.js';
 
 const recipesRouter = express.Router();
+
+recipesRouter.get('/', publicRecipesctrl.allRecipesInCategory);
+
+recipesRouter.get('/public/:id', isValidId, publicRecipesctrl.receptById);
+
+recipesRouter.get('/popular', publicRecipesctrl.popularRecipes);
 
 recipesRouter.post(
   '/',
@@ -22,15 +29,32 @@ recipesRouter.post(
   checkFileExists,
   recipesControllers.createOwnRecipe
 );
-recipesRouter.get('/', authenticate, recipesControllers.getAllOwnRecipes);
+recipesRouter.get(
+  '/myRecepies',
+  authenticate,
+  recipesControllers.getAllOwnRecipes
+); //// <------- added myRecepies, інакше не праює 2 однакових раути на рецепти "/" один публічний інший приватний
 recipesRouter.delete(
   '/:id',
   authenticate,
   isValidId,
   recipesControllers.deleteOwnRecipe
 );
-recipesRouter.post('/favorites', authenticate, recipesControllers.addToFavorites);
-recipesRouter.delete('/favorites/:id', authenticate, isValidId, recipesControllers.removeFromFavorites);
-recipesRouter.get('/favorites', authenticate, recipesControllers.getFavoriteRecipes);
+recipesRouter.post(
+  '/favorites',
+  authenticate,
+  recipesControllers.addToFavorites
+);
+recipesRouter.delete(
+  '/favorites/:id',
+  authenticate,
+  isValidId,
+  recipesControllers.removeFromFavorites
+);
+recipesRouter.get(
+  '/favorites',
+  authenticate,
+  recipesControllers.getFavoriteRecipes
+);
 
 export default recipesRouter;
