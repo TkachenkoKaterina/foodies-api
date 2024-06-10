@@ -13,7 +13,7 @@ import publicRecipesctrl from '../controllers/publicRecipes/index.js';
 
 const recipesRouter = express.Router();
 
-recipesRouter.get('/', publicRecipesctrl.allRecipesInCategory);
+recipesRouter.get('/filter/:category', publicRecipesctrl.allRecipesInCategory);
 
 recipesRouter.get('/public/:id', isValidId, publicRecipesctrl.receptById);
 
