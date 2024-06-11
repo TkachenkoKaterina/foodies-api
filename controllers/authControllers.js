@@ -33,6 +33,7 @@ const signup = async (req, res) => {
 
   res.status(201).json({
     user: {
+      _id: newUser._id,
       name: newUser.name,
       email: newUser.email,
       avatar: avatar,
@@ -49,8 +50,11 @@ const signin = async (req, res) => {
   res.json({
     token: user.token,
     user: {
+      _id: user._id,
       name: user.name,
       email: user.email,
+      avatar: user.avatar,
+      following: user.following,
     },
   });
 };
@@ -68,9 +72,11 @@ const getCurrent = async (req, res) => {
   const user = req.user;
 
   res.json({
+    _id: user._id,
     name: user.name,
     email: user.email,
     avatar: user.avatar,
+    following: user.following,
   });
 };
 
@@ -115,6 +121,7 @@ const getProfileInfo = async (req, res) => {
     console.log(filter);
     const currentUserRecipes = await listAllRecipesService({ filter });
     res.json({
+      _id: currentUser._id,
       name: currentUser.name,
       email: currentUser.email,
       avatar: currentUser.avatar,
@@ -127,6 +134,7 @@ const getProfileInfo = async (req, res) => {
     const filter = { id };
     const userRecipes = await listAllRecipesService({ filter });
     res.json({
+      _id: user._id,
       name: user.name,
       email: user.email,
       recipes: userRecipes.length,
