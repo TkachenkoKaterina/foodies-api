@@ -39,7 +39,7 @@ export const addToFavoritesService = async (userId, recipeId) => {
 
   user.favorites.push(recipeId);
   await user.save();
-  Recipe.update(
+  Recipe.updateOne(
     {
       _id: recipeId,
     },
@@ -66,7 +66,7 @@ export const removeFromFavoritesService = async (userId, recipeId) => {
 
   user.favorites = user.favorites.filter(id => id !== recipeId);
   await user.save();
-  Recipe.update(
+  Recipe.updateOne(
     {
       _id: recipeId,
     },
