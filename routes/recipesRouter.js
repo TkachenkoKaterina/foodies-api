@@ -29,11 +29,7 @@ recipesRouter.post(
   checkFileExists,
   recipesControllers.createOwnRecipe
 );
-recipesRouter.get(
-  '/myRecipes',
-  authenticate,
-  recipesControllers.getAllOwnRecipes
-); //// <------- added myRecipes, інакше не праює 2 однакових раути на рецепти "/" один публічний інший приватний
+recipesRouter.get('/:id', authenticate, recipesControllers.getAllOwnRecipes); //// <------- added myRecipes, інакше не праює 2 однакових раути на рецепти "/" один публічний інший приватний
 recipesRouter.delete(
   '/:id',
   authenticate,
