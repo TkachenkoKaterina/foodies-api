@@ -43,7 +43,7 @@ export const createOwnRecipe = async (req, res, next) => {
   resizeImage(oldPath, newPath, 550, 400);
   await fs.unlink(oldPath);
   const { _id: owner } = req.user;
-  const thumb = path.join('thumbRecipeImages', filename);
+  const thumb = path.posix.join('thumbRecipeImages', filename);
   const result = await addRecipeService({ ...req.body, owner, thumb });
   res.status(201).json(result);
 };
