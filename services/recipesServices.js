@@ -64,7 +64,7 @@ export const removeFromFavoritesService = async (userId, recipeId) => {
     throw HttpError(400, 'Recipe not in favorites');
   }
 
-  user.favorites = user.favorites.filter(id => id !== recipeId);
+  user.favorites = user.favorites.filter(id => id.toString() !== recipeId);
   await user.save();
   Recipe.updateOne(
     {
@@ -78,8 +78,12 @@ export const removeFromFavoritesService = async (userId, recipeId) => {
   );
 };
 
-export const getFavoriteRecipesService = async userId => {
-  const user = await User.findById(userId).populate('favorites');
+export const getFavoriteRecipesService = async (userId, settings = {}) => {
+  const user = await User.findById(userId).populate({
+    path: 'favorites',
+    select: '_id title thumb description',
+    options: settings
+  });;
 
   if (!user) {
     throw HttpError(404, 'User not found');
