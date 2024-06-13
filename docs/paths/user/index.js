@@ -4,6 +4,9 @@ import followUser from './followUser.js';
 import unfollowUser from './unfollowUser.js';
 import followingUser from './followingUser.js';
 import followersUser from './followersUser.js';
+import getFavRecipes from './getFavRecipes.js';
+import addToFavorites from './addToFavorites.js';
+import removeFromFavorites from './removeFromFavorites.js';
 
 export default {
   paths: {
@@ -22,6 +25,15 @@ export default {
     },
     '/users/followers/{id}': {
       ...followersUser,
+    },
+    '/recipes/favorites': {
+      ...getFavRecipes,
+    },
+    '/recipes/favorites/{id}': {
+      ...addToFavorites,
+    },
+    '/recipes/favorites/{id}': {
+      ...removeFromFavorites,
     },
   },
 };
