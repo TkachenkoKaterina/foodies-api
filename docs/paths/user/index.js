@@ -28,11 +28,10 @@ export default {
     },
     '/recipes/favorites': {
       ...getFavRecipes,
+      
     },
     '/recipes/favorites/{id}': {
       ...addToFavorites,
-    },
-    '/recipes/favorites/{id}': {
       ...removeFromFavorites,
     },
   },
