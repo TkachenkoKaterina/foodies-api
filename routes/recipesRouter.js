@@ -36,8 +36,22 @@ recipesRouter.delete(
   isValidId,
   recipesControllers.deleteOwnRecipe
 );
-recipesRouter.post('/favorites/:id', authenticate, isValidId, recipesControllers.addToFavorites);
-recipesRouter.delete('/favorites/:id', authenticate, isValidId, recipesControllers.removeFromFavorites);
-recipesRouter.get('/favorites', authenticate, recipesControllers.getFavoriteRecipes);
+recipesRouter.get(
+  '/favorites/all',
+  authenticate,
+  recipesControllers.getFavoriteRecipes
+);
+recipesRouter.post(
+  '/favorites/:id',
+  authenticate,
+  isValidId,
+  recipesControllers.addToFavorites
+);
+recipesRouter.delete(
+  '/favorites/:id',
+  authenticate,
+  isValidId,
+  recipesControllers.removeFromFavorites
+);
 
 export default recipesRouter;
