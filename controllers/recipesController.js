@@ -16,7 +16,7 @@ import resizeImage from '../helpers/resizeImg.js';
 const thumbRecipeImagesPath = path.resolve('public', 'thumbRecipeImages');
 
 export const getAllOwnRecipes = async (req, res, next) => {
-  const { _id: owner } = req.user;
+  const { id: owner } = req.params;
   const { page = 1, limit = 5 } = req.query;
   const filter = { owner };
   const fields = '-createdAt -updatedAt';
@@ -43,7 +43,7 @@ export const createOwnRecipe = async (req, res, next) => {
   resizeImage(oldPath, newPath, 550, 400);
   await fs.unlink(oldPath);
   const { _id: owner } = req.user;
-  const thumb = path.join('thumbRecipeImages', filename);
+  const thumb = path.posix.join('thumbRecipeImages', filename);
   const result = await addRecipeService({ ...req.body, owner, thumb });
   res.status(201).json(result);
 };
@@ -52,20 +52,20 @@ export const addToFavorites = async (req, res, next) => {
     const { id: recipeId } = req.params;
     const { _id: userId } = req.user;
 
-    await addToFavoritesService(userId, recipeId);
+  await addToFavoritesService(userId, recipeId);
 
-    res.status(200).json({ message: 'Recipe added to favorites successfully' });
+  res.status(200).json({ message: 'Recipe added to favorites successfully' });
 };
 
 export const removeFromFavorites = async (req, res, next) => {
-    const { id: recipeId } = req.params;
-    const { _id: userId } = req.user;
+  const { id: recipeId } = req.params;
+  const { _id: userId } = req.user;
 
-    await removeFromFavoritesService(userId, recipeId);
+  await removeFromFavoritesService(userId, recipeId);
 
-    res
-      .status(200)
-      .json({ message: 'Recipe removed from favorites successfully' });
+  res
+    .status(200)
+    .json({ message: 'Recipe removed from favorites successfully' });
 };
 
 export const getFavoriteRecipes = async (req, res, next) => {

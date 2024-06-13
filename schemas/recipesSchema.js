@@ -1,7 +1,7 @@
 import Joi from 'joi';
 
 const ingredientSchema = Joi.object({
-  _id: Joi.string().required().messages({
+  id: Joi.string().required().messages({
     'any.required': 'Ingredient ID is required',
     'string.empty': 'Ingredient ID cannot be empty',
   }),

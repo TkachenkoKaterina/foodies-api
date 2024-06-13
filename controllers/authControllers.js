@@ -7,7 +7,7 @@ import path from 'path';
 import fs from 'fs/promises';
 import resizeImage from '../helpers/resizeImg.js';
 
-import { listAllRecipesService } from '../services/recipesServices.js'
+import { listAllRecipesService } from '../services/recipesServices.js';
 
 const signup = async (req, res) => {
   const { name, email, password } = req.body;
@@ -20,9 +20,20 @@ const signup = async (req, res) => {
     r: 'x',
     d: 'retro',
   });
-  const newUser = await authServices.signup(name, email, password, avatar);
+
+  const newName = name.trim();
+  const newPassword = password.trim();
+
+  const newUser = await authServices.signup(
+    newName,
+    email,
+    newPassword,
+    avatar
+  );
+
   res.status(201).json({
     user: {
+      _id: newUser._id,
       name: newUser.name,
       email: newUser.email,
       avatar: avatar,
@@ -39,8 +50,11 @@ const signin = async (req, res) => {
   res.json({
     token: user.token,
     user: {
+      _id: user._id,
       name: user.name,
       email: user.email,
+      avatar: user.avatar,
+      following: user.following,
     },
   });
 };
@@ -55,14 +69,14 @@ const logout = async (req, res) => {
 };
 
 const getCurrent = async (req, res) => {
-  const user = await authServices.findUserById(req.user._id.toString());
-  if (user.token != req.user.token) {
-    throw HttpError(401, 'Unauthorized');
-  }
+  const user = req.user;
+
   res.json({
+    _id: user._id,
     name: user.name,
     email: user.email,
     avatar: user.avatar,
+    following: user.following,
   });
 };
 
@@ -101,12 +115,13 @@ const getProfileInfo = async (req, res) => {
   const { id } = req.params;
   const currentUser = await authServices.findUserById(owner);
   const user = await authServices.findUserById(id);
-  console.log({id});
+  console.log({ id });
   if (owner.toString() === id) {
     const filter = { owner };
     console.log(filter);
     const currentUserRecipes = await listAllRecipesService({ filter });
     res.json({
+      _id: currentUser._id,
       name: currentUser.name,
       email: currentUser.email,
       avatar: currentUser.avatar,
@@ -119,6 +134,7 @@ const getProfileInfo = async (req, res) => {
     const filter = { id };
     const userRecipes = await listAllRecipesService({ filter });
     res.json({
+      _id: user._id,
       name: user.name,
       email: user.email,
       recipes: userRecipes.length,
@@ -126,7 +142,6 @@ const getProfileInfo = async (req, res) => {
       followers: user.followers.length,
     });
   }
-  
 };
 
 export default {
