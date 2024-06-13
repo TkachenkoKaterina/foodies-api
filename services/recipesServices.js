@@ -83,7 +83,7 @@ export const getFavoriteRecipesService = async (userId, settings = {}) => {
     path: 'favorites',
     select: '_id title thumb description',
     options: settings
-  });;
+  });
 
   if (!user) {
     throw HttpError(404, 'User not found');
