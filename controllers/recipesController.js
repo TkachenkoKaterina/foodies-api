@@ -49,7 +49,7 @@ export const createOwnRecipe = async (req, res, next) => {
 };
 
 export const addToFavorites = async (req, res, next) => {
-    const { id: recipeId } = req.body;
+    const { id: recipeId } = req.params;
     const { _id: userId } = req.user;
 
     await addToFavoritesService(userId, recipeId);
@@ -69,8 +69,12 @@ export const removeFromFavorites = async (req, res, next) => {
 };
 
 export const getFavoriteRecipes = async (req, res, next) => {
-    const { id: userId } = req.user;
-    const favorites = await getFavoriteRecipesService(userId);
+    const { _id: userId } = req.user;
+    const { page = 1, limit = 9 } = req.query;
+    const skip = (page - 1) * limit;
+    const settings = { skip: parseInt(skip, 10), limit: parseInt(limit, 10) };
+
+    const favorites = await getFavoriteRecipesService(userId, settings);
     res.json({ favorites });
 };
 
