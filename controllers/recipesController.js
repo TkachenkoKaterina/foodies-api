@@ -74,8 +74,8 @@ export const getFavoriteRecipes = async (req, res, next) => {
   const skip = (page - 1) * limit;
   const settings = { skip: parseInt(skip, 10), limit: parseInt(limit, 10) };
 
-  const favorites = await getFavoriteRecipesService(userId, settings);
-  res.json({ favorites });
+  const {favorites, total} = await getFavoriteRecipesService(userId, settings);
+  res.json({ total, favorites });
 };
 
 export default {
