@@ -6,8 +6,6 @@ export const getPopularRecipes = async () => {
     .sort({ likes: 1 })
     .limit(4);
 
-  return {
-    data,
-  };
+  return data;
 };
 export default getPopularRecipes;
