@@ -89,6 +89,7 @@ export const getFavoriteRecipesService = async (userId, settings = {}) => {
     throw HttpError(404, 'User not found');
   }
 
-  const total = user.favorites.length; 
-  return { favorites: user.favorites, total };
+  const total = user.favorites.length;
+  const result = user.favorites; 
+  return { result, total };
 };
