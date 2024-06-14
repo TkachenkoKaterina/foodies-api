@@ -24,6 +24,14 @@ export const signup = async (name, email, pass, avatar) => {
     avatar,
   });
 
+  const { JWT_SECRET } = process.env;
+  const payload = {
+    id: user._id,
+  };
+  const token = jwt.sign(payload, JWT_SECRET, { expiresIn: '30d' });
+  user.token = token;
+  await user.save();
+
   return user;
 };
 
