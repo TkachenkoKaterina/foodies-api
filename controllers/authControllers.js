@@ -32,6 +32,7 @@ const signup = async (req, res) => {
   );
 
   res.status(201).json({
+    token: newUser.token,
     user: {
       _id: newUser._id,
       name: newUser.name,
