@@ -125,6 +125,37 @@ export default {
           },
         },
       },
+      Testimonial: {
+        type: 'object',
+        required: ['total', 'result'],
+        properties: {
+          total: {
+            type: 'number',
+            description: 'Total testimonials in database',
+          },
+          result: [
+            {
+              _id: {
+                type: 'string',
+                description: 'Backend-generated unique identifier',
+              },
+              owner: {
+                type: 'string',
+                description: 'Owner ID is required',
+              },
+              testimonial: {
+                type: 'string',
+                description: 'Write testimonial text',
+              },
+            },
+          ],
+        },
+        example: {
+          _id: '6g6g8g8e7b8g8g8g8g8g8g8g',
+          owner: 'Name',
+          testimonial: 'Thank you for the wonderful recipe for feta pasta with tomatoes and basil.',
+        },
+      },
     },
     securitySchemes: {
       bearerAuth: {
