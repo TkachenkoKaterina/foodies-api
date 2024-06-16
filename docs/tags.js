@@ -5,6 +5,10 @@ export default {
       description: 'Operations about users',
     },
     {
+      name: 'profile',
+      description: 'Operations about user profile',
+    },
+    {
       name: 'categories',
       description: 'Operations about categories',
     },
