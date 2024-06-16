@@ -1,7 +1,7 @@
-import getAllTestimonials from "./getAllTestimonials.js";
+import getAllTestimonials from './getAllTestimonials.js';
 
 export default {
-    '/testimonials': {
-      ...getAllTestimonials,
-    },
-  };
+  '/testimonials': {
+    ...getAllTestimonials,
+  },
+};
