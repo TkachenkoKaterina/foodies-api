@@ -1,9 +1,9 @@
-const { CLIENT_URL } = process.env;
+const { BASE_URL } = process.env;
 
 export default {
   servers: [
     {
-      url: `${CLIENT_URL}/api`,
+      url: `${BASE_URL}/api`,
     },
   ],
 };

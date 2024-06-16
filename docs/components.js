@@ -67,7 +67,7 @@ export default {
           'area',
           'instructions',
           'description',
-          'thumb',
+          'thumbRecipeImages',
           'time',
         ],
         properties: {
@@ -99,7 +99,7 @@ export default {
             type: 'string',
             description: 'Description is required',
           },
-          thumb: {
+          thumbRecipeImages: {
             type: 'string',
             description: 'Image is required',
           },
@@ -136,31 +136,32 @@ export default {
           result: {
             type: 'array',
             description: 'Array of objects testimonials',
-              items: {
-                type: 'object',
-                properties: {
-                  _id: {
-                    type: 'string',
-                    description: 'Backend-generated unique identifier',
-                  },
-                  owner: {
-                    type: 'string',
-                    description: 'Owner name is required',
-                  },
-                  testimonial: {
-                    type: 'string',
-                    description: 'Write testimonial text',
-                  },
+            items: {
+              type: 'object',
+              properties: {
+                _id: {
+                  type: 'string',
+                  description: 'Backend-generated unique identifier',
+                },
+                owner: {
+                  type: 'string',
+                  description: 'Owner name is required',
+                },
+                testimonial: {
+                  type: 'string',
+                  description: 'Write testimonial text',
                 },
               },
             },
           },
+        },
         example: {
           total: 12,
           result: {
             _id: '6g6g8g8e7b8g8g8g8g8g8g8g',
             owner: 'Name',
-            testimonial: 'Thank you for the wonderful recipe for feta pasta with tomatoes and basil.',
+            testimonial:
+              'Thank you for the wonderful recipe for feta pasta with tomatoes and basil.',
           },
         },
       },

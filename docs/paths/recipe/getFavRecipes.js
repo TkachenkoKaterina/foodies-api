@@ -1,6 +1,6 @@
 export default {
   get: {
-    tags: ['favorites'],
+    tags: ['recipes'],
     summary: 'Get favorite recipes of a user',
     security: [{ bearerAuth: [] }],
     responses: {
