@@ -38,6 +38,7 @@ const signup = async (req, res) => {
       name: newUser.name,
       email: newUser.email,
       avatar: avatar,
+      following: newUser.following,
     },
   });
 };
