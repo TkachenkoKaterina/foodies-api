@@ -133,27 +133,35 @@ export default {
             type: 'number',
             description: 'Total testimonials in database',
           },
-          result: [
-            {
-              _id: {
-                type: 'string',
-                description: 'Backend-generated unique identifier',
-              },
-              owner: {
-                type: 'string',
-                description: 'Owner ID is required',
-              },
-              testimonial: {
-                type: 'string',
-                description: 'Write testimonial text',
+          result: {
+            type: 'array',
+            description: 'Array of objects testimonials',
+              items: {
+                type: 'object',
+                properties: {
+                  _id: {
+                    type: 'string',
+                    description: 'Backend-generated unique identifier',
+                  },
+                  owner: {
+                    type: 'string',
+                    description: 'Owner name is required',
+                  },
+                  testimonial: {
+                    type: 'string',
+                    description: 'Write testimonial text',
+                  },
+                },
               },
             },
-          ],
-        },
+          },
         example: {
-          _id: '6g6g8g8e7b8g8g8g8g8g8g8g',
-          owner: 'Name',
-          testimonial: 'Thank you for the wonderful recipe for feta pasta with tomatoes and basil.',
+          total: 12,
+          result: {
+            _id: '6g6g8g8e7b8g8g8g8g8g8g8g',
+            owner: 'Name',
+            testimonial: 'Thank you for the wonderful recipe for feta pasta with tomatoes and basil.',
+          },
         },
       },
     },
