@@ -28,5 +28,9 @@ export default {
       name: 'recipes',
       description: 'Operations about recipes',
     },
+    {
+      name: 'popular',
+      description: 'Operations about popular recipes',
+    },
   ],
 };
