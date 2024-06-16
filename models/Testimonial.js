@@ -4,7 +4,7 @@ const testimonialSchema = new Schema(
     {
         owner: {
             type: Schema.Types.ObjectId,
-            ref: 'user',
+            ref: 'User',
         },
         testimonial: {
             type: String,
