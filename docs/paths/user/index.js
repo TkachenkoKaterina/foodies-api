@@ -4,6 +4,7 @@ import followUser from './followUser.js';
 import unfollowUser from './unfollowUser.js';
 import followingUser from './followingUser.js';
 import followersUser from './followersUser.js';
+import currentUser from './currentUser.js';
 
 export default {
   '/users/signup': {
@@ -11,6 +12,9 @@ export default {
   },
   '/users/signin': {
     ...loginUser,
+  },
+  '/users/current': {
+    ...currentUser,
   },
   '/users/follow/{id}': {
     ...followUser,

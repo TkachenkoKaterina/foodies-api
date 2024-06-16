@@ -8,5 +8,9 @@ export default {
       name: 'favorites',
       description: 'Operations about favorite recipes',
     },
+    {
+      name: 'testimonials',
+      description: 'Operations about testimonials',
+    }
   ],
 };
