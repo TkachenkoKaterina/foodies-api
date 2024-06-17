@@ -36,8 +36,11 @@ export default {
         400: {
             description: "Bad Request",
         },
+        401: {
+            description: 'Not authorized',
+        },
         404: {
-            description: "Not Found",
+            description: "User not found",
         },
         500: {
           description: 'Server error',
