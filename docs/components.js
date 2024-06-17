@@ -125,6 +125,62 @@ export default {
           },
         },
       },
+      Profile: {
+        type: 'object',
+        require: [
+          '_id',
+          'name',
+          'email',
+          'avatar',
+          'recipes',
+          'followers',
+        ],
+        properties: {
+          _id: {
+            type: 'string',
+            description: 'User _id or Current User _id',
+          },
+          name: {
+            type: 'string',
+            description: 'User name or Current User name',
+          },
+          email: {
+            type: 'string',
+            description: 'User email or Current User email',
+          },
+          avatar: {
+            type: 'string',
+            description: 'User avatar or Current User avatar or null,',
+            default: null,
+          },
+          recipes: {
+            type: 'number',
+            description: 'User recipes or Current User recipes',
+          },
+          followers: {
+            type: 'number',
+            description: 'User followers or Current User followers',
+          },
+          favorites: {
+            type: 'number',
+            description: 'Current User favorites',
+          },
+          following: {
+            type: 'number',
+            description: 'Current User following',
+          },
+        },
+        example: {
+          _id: '6g6g8g8e7b8g8g8g8g8g8g8g',
+          name: 'Name',
+          email: 'email@mail.com',
+          avatar: null,
+          recipes: 888,
+          followers: 999,
+          favorites: 555,
+          following: 444,
+        },
+      },
       Testimonial: {
         type: 'object',
         required: ['total', 'result'],
