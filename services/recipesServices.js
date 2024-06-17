@@ -35,7 +35,6 @@ export const addToFavoritesService = async (userId, recipeId) => {
   if (user.favorites.includes(recipeId)) {
     throw HttpError(400, 'Recipe already in favorites');
   }
-  //
 
   user.favorites.push(recipeId);
   await user.save();
@@ -82,7 +81,7 @@ export const getFavoriteRecipesService = async (userId, settings = {}) => {
   const user = await User.findById(userId).populate({
     path: 'favorites',
     select: '_id title thumb description',
-    options: settings
+    options: settings,
   });
 
   if (!user) {
@@ -90,6 +89,6 @@ export const getFavoriteRecipesService = async (userId, settings = {}) => {
   }
 
   const total = user.favorites.length;
-  const result = user.favorites; 
+  const result = user.favorites;
   return { result, total };
 };
