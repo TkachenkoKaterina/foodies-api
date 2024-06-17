@@ -35,7 +35,6 @@ export const addToFavoritesService = async (userId, recipeId) => {
   if (user.favorites.includes(recipeId)) {
     throw HttpError(400, 'Recipe already in favorites');
   }
-  //
 
   user.favorites.push(recipeId);
   await user.save();
@@ -80,7 +79,7 @@ export const removeFromFavoritesService = async (userId, recipeId) => {
 
 export const getFavoriteRecipesService = async (userId, settings = {}) => {
   const user = await User.findById(userId);
-  
+
   if (!user) {
     throw HttpError(404, 'User not found');
   }
