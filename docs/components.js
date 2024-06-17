@@ -296,6 +296,74 @@ export default {
           },
         },
       },
+      Category: { 
+        type: 'object',
+        properties: {
+          _id: {
+            type: 'string',
+            description: 'Backend-generated unique identifier',
+          },
+          name: {
+            type: 'string',
+            description: 'Category name',
+          },
+        },
+        example: {
+          result: {
+            _id: '6669cfeccc45e7b75b194ab8',
+            name: 'Beef',
+          }
+        }
+      },
+      Area: {
+        type: 'object',
+        properties: {
+          _id: {
+            type: 'string',
+            description: 'Backend-generated unique indentifier',
+          },
+          name: {
+            type: 'string',
+            description: 'Area recipe',
+          },
+        },
+        example: {
+          result: {
+            _id: '6462a6f04c3d0ddd28897f9b',
+            name: 'Ukrainian',
+          },
+        },
+      },
+      Ingredient: {
+        type: 'object',
+        properties: {
+          _id: {
+            tipe: 'string',
+            description: 'Backend-generated unique identifier',
+          },
+          name: {
+            type: 'string',
+            description: 'ingredient name',
+          },
+          desc: {
+            type: 'string',
+            description: 'ingredient description',
+          },
+          img: {
+            type: 'string',
+            format: 'uri',
+            description: 'ingredient image',
+          },
+        },
+        example: {
+          result: {
+            _id: '640c2dd963a319ea671e383b',
+            name: 'Ackee',
+            desc: 'A fruit that is native to West Africa, but is also grown in the Caribbean, and is often used in traditional Jamaican dishes such as ackee and saltfish.',
+            img: 'https://ftp.goit.study/img/so-yummy/ingredients/640c2dd963a319ea671e383b.png',
+          },
+        },
+      },
     },
     securitySchemes: {
       bearerAuth: {
