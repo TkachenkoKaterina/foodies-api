@@ -11,6 +11,7 @@ export default {
         },
       },
       401: {
+        description: 'Not authorized',
         message: 'Not authorized',
       },
     },
