@@ -202,14 +202,7 @@ export default {
       },
       Profile: {
         type: 'object',
-        require: [
-          '_id',
-          'name',
-          'email',
-          'avatar',
-          'recipes',
-          'followers',
-        ],
+        require: ['_id', 'name', 'email', 'avatar', 'recipes', 'followers'],
         properties: {
           _id: {
             type: 'string',
@@ -296,7 +289,7 @@ export default {
           },
         },
       },
-      Category: { 
+      Category: {
         type: 'object',
         properties: {
           _id: {
@@ -312,8 +305,8 @@ export default {
           result: {
             _id: '6669cfeccc45e7b75b194ab8',
             name: 'Beef',
-          }
-        }
+          },
+        },
       },
       Area: {
         type: 'object',
