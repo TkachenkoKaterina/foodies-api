@@ -5,6 +5,7 @@ const getRecipeById = async id => {
     'owner',
     'name avatar'
   );
+  console.log(result);
   return result;
 };
 export default getRecipeById;
